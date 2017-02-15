@@ -1,34 +1,22 @@
-#include <iostream>
+#include "stack.h"
+#include "queue.h"
+
 using namespace std;
-
-class Test{
-	private:
-		int num;
-
-	public:
-
-		Test(int n)
-		{
-			num = n;
-		}
-
-		~Test()
-		{
-		}
-
-		void Print()
-		{
-			cout << "Number: " << num << endl;
-		}
-};
 
 int main(void)
 {
-	int n;
+	myStack s;
+	myQueue q;
 
-	cout << "Input number: ";
-	cin  >> n;
-	Test t(n);
-	t.Print();
+	s.push(10);
+	s.push(10);
+
+	cout << s.size() << endl;
+	cout << s.top() << endl;
+
+	s.pop();
+
+	cout << s.top() << endl;
+
 	return 0;
 }
