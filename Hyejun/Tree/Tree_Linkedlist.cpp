@@ -95,8 +95,6 @@ class myTree_L{
 			thisNode = root;
 			Node * p = searchNode(thisNode, data);
 
-			cout << getNodeNumber() << endl;
-
 			if(p)
 			{
 				if(thisNode -> rightNode == NULL && thisNode -> leftNode == NULL)
@@ -151,15 +149,11 @@ class myTree_L{
 						leftlevel++;
 					}
 
-					cout << "leftData: " << leftDataNode -> data << ", " << leftlevel << endl;
-
 					while(rightDataNode -> leftNode != NULL)
 					{
 						rightDataNode = rightDataNode -> leftNode;
 						rightlevel++;
 					}
-
-					cout << "rightData: " << rightDataNode -> data << ", " << rightlevel << endl;
 
 					if(leftlevel > rightlevel)
 					{
@@ -167,8 +161,6 @@ class myTree_L{
 						Node * p = searchNode(root, leftDataNode -> data);
 						if(leftDataNode -> leftNode != NULL)
 						{
-							cout << "자식 노드 있음" << endl;
-							cout << "parentNodeData: " << parentNode -> data << endl;
 							temp = leftDataNode -> data;
 							leftDataNode -> data = leftDataNode -> leftNode -> data;
 							originThisNode -> data = temp;
@@ -178,7 +170,6 @@ class myTree_L{
 						}
 						else
 						{
-							cout << "자식노드 없음" << endl;
 							temp = leftDataNode -> data;
 							leftDataNode -> data = originThisNode -> data;
 							originThisNode -> data = temp;
@@ -194,21 +185,17 @@ class myTree_L{
 						Node * p = searchNode(root, rightDataNode -> data);
 						if(rightDataNode -> rightNode != NULL)
 						{
-							cout << "자식노드 있음" << endl;
 							temp = rightDataNode -> data;
 							rightDataNode -> data = rightDataNode -> rightNode -> data;
 							originThisNode -> data = temp;
-
-							parentNode -> leftNode = rightDataNode -> rightNode;
 
 							free(rightDataNode -> rightNode);
 							rightDataNode -> rightNode = NULL;
 						}
 						else
 						{
-							cout << "자식노드 없음" << endl;
 							temp = rightDataNode -> data;
-							rightDataNode -> data = thisNode -> data;
+							rightDataNode -> data = originThisNode -> data;
 							originThisNode -> data = temp;
 
 							parentNode -> leftNode = NULL;
@@ -230,7 +217,7 @@ int main(void)
 
 	while(1)
 	{
-		cout << "1. insert   2. delete   :";
+		cout << "1. insert  2. delete :";
 		cin >> menu;
 
 		switch(menu)
