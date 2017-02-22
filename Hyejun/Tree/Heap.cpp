@@ -39,7 +39,7 @@ class Heap{
 			{
 				if(maxMin)
 				{
-					if(data[newDataIndex] < data[i])
+					if(data[newDataIndex] <= data[i])
 					{
 						temp = data[i];
 						data[i] = data[newDataIndex];
@@ -81,7 +81,7 @@ class Heap{
 					else
 						leafDataNum = i * 2 + 1;
 
-					if(data[i] > data[leafDataNum] && leafDataNum <= size)
+					if(data[i] >= data[leafDataNum] && leafDataNum <= size)
 					{
 						temp = data[i];
 						data[i] = data[leafDataNum];
