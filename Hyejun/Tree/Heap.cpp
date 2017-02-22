@@ -3,43 +3,66 @@
 
 using namespace std;
 
-class myTree_a{
+class Heap{
 	private:
 		int * data;  //0번째는 비워둠
 		int size;
 		bool maxMin;
 
 	public:
-		myTree_a()
+		Heap()
 		{
 			data = (int *) calloc (20, sizeof(int));
 			size = 0;
-			maxMin = false;
+			maxMin = true;
 		}
 
-		~myTree_a()
+		~Heap()
 		{
 			free(data);
 		}
 
+		void isMin(bool input)
+		{
+			maxMin = input;
+		}
+
 		void insert(int inputData)
 		{
+			resize();
+
 			data[++size] = inputData;
 			int newDataIndex = size;
 			int temp;
 
-			for(int i = size / 2; i != 0; i/=2)
+			for(int i = size / 2; i != 0; i /= 2)
 			{
-				if(data[newDataIndex] < data[i])
+				if(maxMin)
 				{
-					temp = data[i];
-					data[i] = data[newDataIndex];
-					data[newDataIndex] = temp;
+					if(data[newDataIndex] < data[i])
+					{
+						temp = data[i];
+						data[i] = data[newDataIndex];
+						data[newDataIndex] = temp;
 
-					newDataIndex = i;
+						newDataIndex = i;
+					}
+					else
+						break;
 				}
 				else
-					break;
+				{
+					if(!(data[newDataIndex] < data[i]))
+					{
+						temp = data[i];
+						data[i] = data[newDataIndex];
+						data[newDataIndex] = temp;
+
+						newDataIndex = i;
+					}
+					else
+						break;
+				}
 			}
 		}
 
@@ -51,20 +74,40 @@ class myTree_a{
 
 			while(i <= size)
 			{
-				if(data[i*2] < data[i*2+1])
-					leafDataNum = i * 2;
-				else
-					leafDataNum = i * 2 + 1;
-
-				if(data[i] > data[leafDataNum] && leafDataNum <= size)
+				if(maxMin)
 				{
-					temp = data[i];
-					data[i] = data[leafDataNum];
-					data[leafDataNum] = temp;
-					i = leafDataNum;
+					if(data[i*2] < data[i*2+1])
+						leafDataNum = i * 2;
+					else
+						leafDataNum = i * 2 + 1;
+
+					if(data[i] > data[leafDataNum] && leafDataNum <= size)
+					{
+						temp = data[i];
+						data[i] = data[leafDataNum];
+						data[leafDataNum] = temp;
+						i = leafDataNum;
+					}
+					else
+						break;
 				}
 				else
-					break;
+				{
+					if(!(data[i*2] < data[i*2+1]))
+						leafDataNum = i * 2;
+					else
+						leafDataNum = i * 2 + 1;
+
+					if(!(data[i] > data[leafDataNum]) && leafDataNum <= size)
+					{
+						temp = data[i];
+						data[i] = data[leafDataNum];
+						data[leafDataNum] = temp;
+						i = leafDataNum;
+					}
+					else
+						break;
+				}
 			}
 		}
 
@@ -73,12 +116,37 @@ class myTree_a{
 			for(int i = 1; i <= size; i++)
 				cout << "data[" << i << "]: " << data[i] << endl;
 		}
+
+		void resize()
+		{
+			static int re = 1;
+
+			if(size == re * 20 - 1)
+			{
+				int * newDataArray = (int *) calloc (++re * 20, sizeof(int));
+				for(int i = 0; i <= size; i++)
+				{
+					newDataArray[i] = data[i];
+				}
+				data = newDataArray;
+				free(newDataArray);
+			}
+		}
+
 };
 
 int main(void)
 {
-	myTree_a t;
+	Heap h;
 	int menu, num;
+
+	cout << "1. min  2. max: ";
+	cin >> menu;
+
+	if(menu == 1)
+		h.isMin(true);
+	else
+		h.isMin(false);
 
 	while(1)
 	{
@@ -89,15 +157,15 @@ int main(void)
 		{
 			case 1:
 				cin >> num;
-				t.insert(num);
+				h.insert(num);
 				break;
 
 			case 2:
-			  t.pop();
+				h.pop();
 				break;
 
 			case 3:
-				t.output();
+				h.output();
 				break;
 
 			default:

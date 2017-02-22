@@ -173,8 +173,6 @@ class myTree_L{
 							leftDataNode -> data = leftDataNode -> leftNode -> data;
 							originThisNode -> data = temp;
 
-							//////////////////////////////////////////////////////////////////////////////////////// 딸린 자식이 계속 남아있음
-
 							free(leftDataNode -> leftNode);
 							leftDataNode -> leftNode = NULL;
 						}
