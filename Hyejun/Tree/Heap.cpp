@@ -123,13 +123,15 @@ class Heap{
 
 			if(size == re * 20 - 1)
 			{
+				cout << "현재 배열 크기: " << size << " / 배열 크기를 늘립니다." << endl;
 				int * newDataArray = (int *) calloc (++re * 20, sizeof(int));
+				int * deleteArray = data;
 				for(int i = 0; i <= size; i++)
 				{
 					newDataArray[i] = data[i];
 				}
 				data = newDataArray;
-				free(newDataArray);
+				free(deleteArray);
 			}
 		}
 
